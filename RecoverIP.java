@@ -42,6 +42,15 @@ class RecoverIP {
             for(int i = 1;i <= 3 && cut+i-1<len;i++){
                 char tmp = s.charAt(cut+i-1);
                 add_temp.append(tmp);
+                if(add_temp.length()>=2 && add_temp.charAt(0)=='0'){    //前导0判断
+                    return;
+                }
+                if(i == 3){
+                    int num = Integer.parseInt(add_temp.toString());    //不能超过255
+                    if(num > 255){
+                        return;
+                    }
+                }
                 dfs(s,temp+add_temp.toString()+'.', area+1,cut+i, len, ans);//递归回溯
             }
         }
