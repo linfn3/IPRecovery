@@ -20,22 +20,29 @@ class RecoverIP {
     }
     public static void dfs(String s, String temp, int area, int cut, int len, List<String> ans){
 
+        if((len-cut) > (4-area)*3 || (len-cut) < (4-area)|| area > 4){ //若前方域的划分导致已不能最终划分为ip，则停止
+            /*
+            System.out.println(cut+" "+area+" ");
+            System.out.println(temp);
+            */
+            return;
+        }
 
 
         if(temp.length() - len == 4){
-            temp = temp.substring(0,temp.length()-1);
+            temp = temp.substring(0,temp.length()-1);   //满足要求的一个ip地址插入ans
             ans.add(temp);
             return;
         }
         else if(area >= 4){
-            return;
+            return;     //ipv4顶多4层级
         }
         else{
             StringBuffer add_temp = new StringBuffer();
             for(int i = 1;i <= 3 && cut+i-1<len;i++){
                 char tmp = s.charAt(cut+i-1);
                 add_temp.append(tmp);
-                dfs(s,temp+add_temp.toString()+'.', area+1,cut+i, len, ans);
+                dfs(s,temp+add_temp.toString()+'.', area+1,cut+i, len, ans);//递归回溯
             }
         }
     }
